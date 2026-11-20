@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF ARENA - Ultimate Free Fire Esports & Tournament Platform</title>
+    <!-- Google Fonts: Rajdhani for esports headers, Inter for crisp body copy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS v3 PlayCDN with Custom Configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        fire: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            glow: '#ff5500',
+                        },
+                        esports: {
+                            dark: '#090a0f',
+                            card: '#12151f',
+                            border: '#1e2330',
+                            accent: '#ff4655'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fire-glow': 'fireGlow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        fireGlow: {
+                            '0%': { boxShadow: '0 0 15px rgba(249, 115, 22, 0.4)' },
+                            '100%': { boxShadow: '0 0 30px rgba(255, 69, 85, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Pro/Free for Esports Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2330;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff4655;
+        }
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(30, 35, 48, 0.3) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(30, 35, 48, 0.3) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .clip-esports {
+            clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%);
+        }
+        .clip-btn {
+            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+        }
+        .clip-badge {
+            clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="bg-esports-dark text-gray-100 font-inter bg-grid-pattern min-h-screen selection:bg-orange-500 selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT TICKER -->
+    <div class="bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white text-xs font-rajdhani font-bold tracking-wider py-1.5 px-4 overflow-hidden shadow-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2 truncate">
+                <span class="bg-black/30 px-2 py-0.5 rounded text-orange-200 uppercase tracking-widest text-[10px] animate-pulse">HOT</span>
+                <p class="truncate">🔥 FREE FIRE PRO LEAGUE SEASON 4 REGISTRATIONS ARE LIVE! PRIZE POOL: ₹1,50,000 + Direct Slot for FFIC Qualifiers!</p>
+            </div>
+            <div class="hidden md:flex items-center space-x-6 text-[11px] uppercase">
+                <span><i class="fa-solid fa-headset mr-1"></i> 24/7 Support: Discord #ffa-help</span>
+                <span><i class="fa-solid fa-shield-halved mr-1 text-emerald-400"></i> Anticheat Active v5.2</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-esports-dark/95 backdrop-blur-md border-b border-esports-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="relative flex items-center justify-center w-11 h-11 bg-gradient-to-br from-orange-500 to-red-600 clip-esports shadow-lg shadow-orange-500/30">
+                        <i class="fa-solid fa-fire-flame-curved text-xl text-white"></i>
+                    </div>
+                    <div>
+                        <a href="#" class="font-rajdhani font-bold text-2xl tracking-wider uppercase bg-gradient-to-r from-white via-orange-100 to-orange-400 bg-clip-text text-transparent">
+                            FF <span class="text-orange-500">ARENA</span>
+                        </a>
+                        <p class="text-[10px] font-rajdhani tracking-widest text-gray-400 uppercase -mt-1">Esports Tournament Hub</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden lg:flex items-center space-x-1 font-rajdhani font-semibold text-lg tracking-wide">
+                    <a href="#tournaments" class="px-4 py-2 text-gray-300 hover:text-orange-500 hover:bg-orange-500/15 rounded transition-all duration-200 active-nav flex items-center space-x-2">
+                        <i class="fa-solid fa-trophy text-sm text-orange-500"></i>
+                        <span>Tournaments</span>
+                    </a>
+                    <a href="#room-center" class="px-4 py-2 text-gray-300 hover:text-orange-500 hover:bg-orange-500/15 rounded transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-key text-sm text-yellow-500"></i>
+                        <span>Room Center</span>
+                        <span class="bg-red-500 text-[10px] px-1.5 py-0.5 rounded-full text-white animate-pulse">LIVE</span>
+                    </a>
+                    <a href="#leaderboard" class="px-4 py-2 text-gray-300 hover:text-orange-500 hover:bg-orange-500/15 rounded transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-medal text-sm text-amber-400"></i>
+                        <span>Leaderboards</span>
+                    </a>
+                    <a href="#results" class="px-4 py-2 text-gray-300 hover:text-orange-500 hover:bg-orange-500/15 rounded transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-square-poll-vertical text-sm text-blue-400"></i>
+                        <span>Results & Kills</span>
+                    </a>
+                    <a href="#wallet" class="px-4 py-2 text-gray-300 hover:text-orange-500 hover:bg-orange-500/15 rounded transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-wallet text-sm text-emerald-400"></i>
+                        <span>Wallet</span>
+                    </a>
+                </nav>
+
+                <!-- Right Side Profile / Wallet Quick -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Wallet Pill -->
+                    <div onclick="openWalletModal()" class="cursor-pointer flex items-center space-x-2 bg-esports-card border border-esports-border px-3.5 py-2 rounded-lg hover:border-orange-500/50 transition">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-coins text-xs"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] text-gray-400 font-rajdhani uppercase tracking-wide">My Wallet</div>
+                            <div class="text-sm font-bold text-emerald-400 font-rajdhani" id="navWalletBal">₹340.00</div>
+                        </div>
+                    </div>
+
+                    <!-- User Profile Avatar -->
+                    <div onclick="openProfileModal()" class="cursor-pointer flex items-center space-x-3 bg-gradient-to-r from-esports-card to-orange-950/30 border border-orange-500/30 pl-3 pr-4 py-1.5 rounded-lg hover:border-orange-500 transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=120&q=80" alt="Avatar" class="w-9 h-9 rounded object-cover border border-orange-500">
+                            <div class="absolute -bottom-1 -right-1 bg-green-500 w-3 h-3 rounded-full border-2 border-esports-dark"></div>
+                        </div>
+                        <div>
+                            <div class="font-rajdhani font-bold text-sm tracking-wider text-white">V9•VIPER</div>
+                            <div class="text-[10px] text-orange-400 font-mono">UID: 849204192</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex lg:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-esports-card border-b border-esports-border px-4 pt-2 pb-6 space-y-3">
+            <a href="#tournaments" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded text-base font-rajdhani font-semibold text-gray-200 hover:bg-orange-500/20">Tournaments</a>
+            <a href="#room-center" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded text-base font-rajdhani font-semibold text-gray-200 hover:bg-orange-500/20">Room Center (Live ID)</a>
+            <a href="#leaderboard" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded text-base font-rajdhani font-semibold text-gray-200 hover:bg-orange-500/20">Leaderboards</a>
+            <a href="#results" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded text-base font-rajdhani font-semibold text-gray-200 hover:bg-orange-500/20">Results & Kills</a>
+            <a href="#wallet" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded text-base font-rajdhani font-semibold text-gray-200 hover:bg-orange-500/20">Wallet & Deposits</a>
+            <div class="pt-4 border-t border-esports-border flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=120&q=80" class="w-10 h-10 rounded border border-orange-500">
+                    <div>
+                        <div class="font-rajdhani font-bold text-white">V9•VIPER</div>
+                        <div class="text-xs text-emerald-400 font-rajdhani">Bal: ₹340.00</div>
+                    </div>
+                </div>
+                <button onclick="openWalletModal()" class="bg-orange-600 hover:bg-orange-500 text-white font-rajdhani font-bold px-4 py-2 rounded text-sm clip-btn">Add Cash</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO BANNER SECTION -->
+    <section class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-esports-dark via-[#141226] to-esports-dark border-b border-esports-border">
+        <!-- Background Decorative Elements -->
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ff5500_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-orange-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-red-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Hero Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-orange-500/10 border border-orange-500/30 px-3.5 py-1.5 rounded-full">
+                        <span class="flex h-2 w-2 rounded-full bg-orange-500 animate-ping"></span>
+                        <span class="text-xs font-rajdhani font-bold tracking-wider text-orange-400 uppercase">India's #1 Free Fire Esports Platform</span>
+                    </div>
+                    <h1 class="font-rajdhani font-extrabold text-4xl sm:text-6xl lg:text-7xl tracking-wide uppercase leading-none">
+                        DROP IN, <br>
+                        <span class="bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 bg-clip-text text-transparent drop-shadow-md">DOMINATE THE LOBBY</span>
+                    </h1>
+                    <p class="text-gray-300 text-base sm:text-lg max-w-2xl font-inter font-light">
+                        Join Daily Free Fire Custom Tournaments (Solo, Duo, Squad). Clash Squad & Battle Royale matches. Win real cash prizes instantly credited to your wallet with 100% secure anti-cheat validation.
+                    </p>
+                    <!-- Hero Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#tournaments" class="w-full sm:w-auto bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-rajdhani font-bold text-lg tracking-wider px-8 py-4 rounded shadow-lg shadow-orange-600/40 clip-btn transition duration-300 flex items-center justify-center space-x-3">
+                            <i class="fa-solid fa-gamepad text-xl"></i>
+                            <span>EXPLORE TOURNAMENTS</span>
+                        </a>
+                        <a href="#room-center" class="w-full sm:w-auto bg-esports-card hover:bg-esports-border border border-esports-border text-gray-200 font-rajdhani font-bold text-lg tracking-wider px-8 py-4 rounded transition duration-300 flex items-center justify-center space-x-3">
+                            <i class="fa-solid fa-key text-yellow-400 text-lg"></i>
+                            <span>GET ROOM ID & PASS</span>
+                        </a>
+                    </div>
+
+                    <!-- Stats Counter Row -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-esports-border max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <div class="font-rajdhani font-bold text-2xl sm:text-3xl text-white">₹15 Lakh+</div>
+                            <div class="text-xs text-gray-400 uppercase font-rajdhani tracking-wider">Prizes Distributed</div>
+                        </div>
+                        <div>
+                            <div class="font-rajdhani font-bold text-2xl sm:text-3xl text-orange-400">120,000+</div>
+                            <div class="text-xs text-gray-400 uppercase font-rajdhani tracking-wider">Registered Players</div>
+                        </div>
+                        <div>
+                            <div class="font-rajdhani font-bold text-2xl sm:text-3xl text-emerald-400">100%</div>
+                            <div class="text-xs text-gray-400 uppercase font-rajdhani tracking-wider">Instant Payouts</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Hero Card / Live Featured Match -->
+                <div class="lg:col-span-5">
+                    <div class="relative bg-gradient-to-b from-esports-card to-[#1a162b] border border-orange-500/40 rounded-2xl p-6 shadow-2xl overflow-hidden animate-fire-glow">
+                        <!-- Ribbon -->
+                        <div class="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-rajdhani font-bold px-4 py-1 tracking-widest uppercase clip-badge">
+                            Featured Match
+                        </div>
+
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span class="bg-orange-500/20 text-orange-400 text-xs font-rajdhani font-bold px-2.5 py-1 rounded border border-orange-500/30">BATTLE ROYALE • BERMUDA</span>
+                            <span class="text-xs text-emerald-400 font-mono font-bold flex items-center"><i class="fa-solid fa-circle text-[8px] mr-1.5 animate-ping"></i> Filling Fast</span>
+                        </div>
+
+                        <h3 class="font-rajdhani font-bold text-2xl text-white mb-2">
+                            FFPL Grand Championship #409
+                        </h3>
+
+                        <p class="text-xs text-gray-300 mb-6">
+                            Win a share of ₹25,000 prize pool. Solo map Bermuda. Standard competitive rules apply. No emulator allowed.
+                        </p>
+
+                        <!-- Progress Bar -->
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between text-xs font-rajdhani font-bold">
+                                <span class="text-gray-300">SLOTS FILLED: <span class="text-orange-400">44 / 48</span></span>
+                                <span class="text-emerald-400">4 Slots Left</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2.5 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-gradient-to-r from-orange-500 to-red-600 h-full w-[91%] rounded-full"></div>
+                            </div>
+                        </div>
+
+                        <!-- Details Grid -->
+                        <div class="grid grid-cols-3 gap-3 mb-6 bg-esports-dark/60 p-3 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-base text-yellow-400">₹40</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Per Kill</div>
+                                <div class="font-rajdhani font-bold text-base text-emerald-400">₹10</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Winner</div>
+                                <div class="font-rajdhani font-bold text-base text-orange-400">₹2,000</div>
+                            </div>
+                        </div>
+
+                        <!-- Register CTA -->
+                        <button onclick="openRegisterModal('FFPL Grand Championship #409', '40', '25000')" class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-rajdhani font-bold text-lg tracking-wider py-3.5 rounded clip-btn shadow-lg transition flex items-center justify-center space-x-2">
+                            <span>JOIN MATCH NOW</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK FILTER & TOURNAMENTS SECTION -->
+    <section id="tournaments" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-esports-border gap-4">
+            <div>
+                <div class="flex items-center space-x-2 text-orange-500 font-rajdhani font-bold uppercase text-sm tracking-widest mb-1">
+                    <i class="fa-solid fa-fire"></i>
+                    <span>Competitive Arena</span>
+                </div>
+                <h2 class="font-rajdhani font-extrabold text-3xl sm:text-4xl text-white uppercase">
+                    ACTIVE <span class="text-orange-500">TOURNAMENTS</span>
+                </h2>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex flex-wrap gap-2" id="filterButtons">
+                <button onclick="filterTournaments('all', this)" class="filter-btn active px-4 py-2 bg-orange-600 text-white font-rajdhani font-bold text-sm rounded clip-btn transition">All Matches</button>
+                <button onclick="filterTournaments('solo', this)" class="filter-btn px-4 py-2 bg-esports-card hover:bg-esports-border text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn transition border border-esports-border">Solo</button>
+                <button onclick="filterTournaments('duo', this)" class="filter-btn px-4 py-2 bg-esports-card hover:bg-esports-border text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn transition border border-esports-border">Duo</button>
+                <button onclick="filterTournaments('squad', this)" class="filter-btn px-4 py-2 bg-esports-card hover:bg-esports-border text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn transition border border-esports-border">Squad</button>
+                <button onclick="filterTournaments('clash', this)" class="filter-btn px-4 py-2 bg-esports-card hover:bg-esports-border text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn transition border border-esports-border">Clash Squad</button>
+                <button onclick="filterTournaments('free', this)" class="filter-btn px-4 py-2 bg-esports-card hover:bg-esports-border text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn transition border border-esports-border">Free Entry</button>
+            </div>
+        </div>
+
+        <!-- TOURNAMENT GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tournamentGrid">
+            
+            <!-- Card 1: Squad BR -->
+            <div class="tournament-card bg-esports-card border border-esports-border hover:border-orange-500/60 rounded-xl overflow-hidden shadow-lg transition duration-300 flex flex-col justify-between" data-category="squad">
+                <div>
+                    <div class="relative h-40 bg-gradient-to-r from-orange-950 via-red-950 to-esports-dark p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-20"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="bg-orange-600 text-white font-rajdhani font-bold text-xs px-2.5 py-1 rounded uppercase tracking-wider">Squad BR</span>
+                            <span class="bg-black/60 text-emerald-400 font-mono text-xs px-2.5 py-1 rounded border border-emerald-500/30">Starts in 25m</span>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="text-xs text-orange-300 font-rajdhani uppercase">Map: Purgatory</div>
+                            <h3 class="font-rajdhani font-bold text-xl text-white tracking-wide">Daily Elite Squad Battle #102</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="grid grid-cols-3 gap-2 bg-esports-dark/80 p-2.5 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Prize Pool</div>
+                                <div class="font-rajdhani font-bold text-sm text-yellow-400">₹5,000</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Per Kill</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">₹15</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-sm text-orange-400">₹100/team</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-rajdhani text-gray-400">
+                                <span>Slots: 18 / 25 Teams</span>
+                                <span class="text-orange-400 font-bold">7 Spots Left</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-orange-500 h-full w-[72%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <button onclick="openRegisterModal('Daily Elite Squad Battle #102', '100', '5000')" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-rajdhani font-bold text-base py-3 rounded clip-btn transition flex items-center justify-center space-x-2">
+                        <span>JOIN SQUAD MATCH</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2: Solo BR (Free Entry) -->
+            <div class="tournament-card bg-esports-card border border-esports-border hover:border-orange-500/60 rounded-xl overflow-hidden shadow-lg transition duration-300 flex flex-col justify-between" data-category="solo free">
+                <div>
+                    <div class="relative h-40 bg-gradient-to-r from-blue-950 via-indigo-950 to-esports-dark p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-20"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="bg-emerald-600 text-white font-rajdhani font-bold text-xs px-2.5 py-1 rounded uppercase tracking-wider">Free / Solo</span>
+                            <span class="bg-black/60 text-yellow-400 font-mono text-xs px-2.5 py-1 rounded border border-yellow-500/30">Starts in 1h 10m</span>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="text-xs text-blue-300 font-rajdhani uppercase">Map: Bermuda (Remastered)</div>
+                            <h3 class="font-rajdhani font-bold text-xl text-white tracking-wide">Newbie & Pro Solo Giveaway #88</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="grid grid-cols-3 gap-2 bg-esports-dark/80 p-2.5 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Prize Pool</div>
+                                <div class="font-rajdhani font-bold text-sm text-yellow-400">₹1,000</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Per Kill</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">₹2</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">FREE</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-rajdhani text-gray-400">
+                                <span>Slots: 45 / 48 Players</span>
+                                <span class="text-emerald-400 font-bold">3 Spots Left</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-emerald-500 h-full w-[93%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <button onclick="openRegisterModal('Newbie & Pro Solo Giveaway #88', '0', '1000')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-rajdhani font-bold text-base py-3 rounded clip-btn transition flex items-center justify-center space-x-2">
+                        <span>CLAIM FREE SLOT</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3: Clash Squad 4v4 -->
+            <div class="tournament-card bg-esports-card border border-esports-border hover:border-orange-500/60 rounded-xl overflow-hidden shadow-lg transition duration-300 flex flex-col justify-between" data-category="clash squad">
+                <div>
+                    <div class="relative h-40 bg-gradient-to-r from-purple-950 via-red-950 to-esports-dark p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-20"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="bg-purple-600 text-white font-rajdhani font-bold text-xs px-2.5 py-1 rounded uppercase tracking-wider">Clash Squad 4v4</span>
+                            <span class="bg-black/60 text-orange-400 font-mono text-xs px-2.5 py-1 rounded border border-orange-500/30">Starts in 2h</span>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="text-xs text-purple-300 font-rajdhani uppercase">Mode: CS Custom (Factory/Clocktower)</div>
+                            <h3 class="font-rajdhani font-bold text-xl text-white tracking-wide">CS Pro Knockout Series #21</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="grid grid-cols-3 gap-2 bg-esports-dark/80 p-2.5 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Prize Pool</div>
+                                <div class="font-rajdhani font-bold text-sm text-yellow-400">₹3,000</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Format</div>
+                                <div class="font-rajdhani font-bold text-sm text-purple-400">Bo3 Match</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-sm text-orange-400">₹150/team</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-rajdhani text-gray-400">
+                                <span>Slots: 6 / 8 Teams</span>
+                                <span class="text-yellow-400 font-bold">2 Spots Left</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-purple-500 h-full w-[75%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <button onclick="openRegisterModal('CS Pro Knockout Series #21', '150', '3000')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-rajdhani font-bold text-base py-3 rounded clip-btn transition flex items-center justify-center space-x-2">
+                        <span>JOIN CLASH SQUAD</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 4: Duo BR -->
+            <div class="tournament-card bg-esports-card border border-esports-border hover:border-orange-500/60 rounded-xl overflow-hidden shadow-lg transition duration-300 flex flex-col justify-between" data-category="duo">
+                <div>
+                    <div class="relative h-40 bg-gradient-to-r from-amber-950 via-orange-950 to-esports-dark p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-20"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="bg-amber-600 text-white font-rajdhani font-bold text-xs px-2.5 py-1 rounded uppercase tracking-wider">Duo BR</span>
+                            <span class="bg-black/60 text-emerald-400 font-mono text-xs px-2.5 py-1 rounded border border-emerald-500/30">Starts in 3h 30m</span>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="text-xs text-amber-300 font-rajdhani uppercase">Map: Alpine</div>
+                            <h3 class="font-rajdhani font-bold text-xl text-white tracking-wide">Alpine Duo Showdown #54</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="grid grid-cols-3 gap-2 bg-esports-dark/80 p-2.5 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Prize Pool</div>
+                                <div class="font-rajdhani font-bold text-sm text-yellow-400">₹2,000</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Per Kill</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">₹10</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-sm text-orange-400">₹50/duo</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-rajdhani text-gray-400">
+                                <span>Slots: 20 / 24 Duos</span>
+                                <span class="text-orange-400 font-bold">4 Spots Left</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-amber-500 h-full w-[83%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <button onclick="openRegisterModal('Alpine Duo Showdown #54', '50', '2000')" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-rajdhani font-bold text-base py-3 rounded clip-btn transition flex items-center justify-center space-x-2">
+                        <span>JOIN DUO MATCH</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 5: Solo BR Paid -->
+            <div class="tournament-card bg-esports-card border border-esports-border hover:border-orange-500/60 rounded-xl overflow-hidden shadow-lg transition duration-300 flex flex-col justify-between" data-category="solo">
+                <div>
+                    <div class="relative h-40 bg-gradient-to-r from-red-950 via-orange-950 to-esports-dark p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-20"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="bg-red-600 text-white font-rajdhani font-bold text-xs px-2.5 py-1 rounded uppercase tracking-wider">Solo BR</span>
+                            <span class="bg-black/60 text-yellow-400 font-mono text-xs px-2.5 py-1 rounded border border-yellow-500/30">Starts Tomorrow</span>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="text-xs text-red-300 font-rajdhani uppercase">Map: Bermuda</div>
+                            <h3 class="font-rajdhani font-bold text-xl text-white tracking-wide">High Roller Solo Master #12</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="grid grid-cols-3 gap-2 bg-esports-dark/80 p-2.5 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Prize Pool</div>
+                                <div class="font-rajdhani font-bold text-sm text-yellow-400">₹10,000</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Per Kill</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">₹50</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-sm text-orange-400">₹200</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-rajdhani text-gray-400">
+                                <span>Slots: 32 / 48 Players</span>
+                                <span class="text-orange-400 font-bold">16 Spots Left</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-red-500 h-full w-[66%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <button onclick="openRegisterModal('High Roller Solo Master #12', '200', '10000')" class="w-full bg-red-600 hover:bg-red-500 text-white font-rajdhani font-bold text-base py-3 rounded clip-btn transition flex items-center justify-center space-x-2">
+                        <span>JOIN HIGH ROLLER</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 6: Squad BR Free -->
+            <div class="tournament-card bg-esports-card border border-esports-border hover:border-orange-500/60 rounded-xl overflow-hidden shadow-lg transition duration-300 flex flex-col justify-between" data-category="squad free">
+                <div>
+                    <div class="relative h-40 bg-gradient-to-r from-emerald-950 via-teal-950 to-esports-dark p-4 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-20"></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <span class="bg-emerald-600 text-white font-rajdhani font-bold text-xs px-2.5 py-1 rounded uppercase tracking-wider">Free / Squad</span>
+                            <span class="bg-black/60 text-emerald-400 font-mono text-xs px-2.5 py-1 rounded border border-emerald-500/30">Starts in 5h</span>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="text-xs text-emerald-300 font-rajdhani uppercase">Map: Bermuda</div>
+                            <h3 class="font-rajdhani font-bold text-xl text-white tracking-wide">Community Squad Giveaway #15</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="grid grid-cols-3 gap-2 bg-esports-dark/80 p-2.5 rounded-lg border border-esports-border text-center">
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Prize Pool</div>
+                                <div class="font-rajdhani font-bold text-sm text-yellow-400">₹1,500</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Per Kill</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">₹5</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Entry Fee</div>
+                                <div class="font-rajdhani font-bold text-sm text-emerald-400">FREE</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-rajdhani text-gray-400">
+                                <span>Slots: 24 / 25 Teams</span>
+                                <span class="text-emerald-400 font-bold">1 Spot Left!</span>
+                            </div>
+                            <div class="w-full bg-esports-dark h-2 rounded-full overflow-hidden border border-esports-border">
+                                <div class="bg-emerald-500 h-full w-[96%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <button onclick="openRegisterModal('Community Squad Giveaway #15', '0', '1500')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-rajdhani font-bold text-base py-3 rounded clip-btn transition flex items-center justify-center space-x-2">
+                        <span>CLAIM LAST SLOT</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ROOM ID & PASSWORD CENTER (LIVE TIMER SECTION) -->
+    <section id="room-center" class="py-16 bg-gradient-to-b from-esports-dark via-[#12101e] to-esports-dark border-y border-esports-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="inline-flex items-center space-x-2 bg-yellow-500/10 border border-yellow-500/30 px-3.5 py-1.5 rounded-full mb-3">
+                    <i class="fa-solid fa-key text-yellow-400 text-xs"></i>
+                    <span class="text-xs font-rajdhani font-bold tracking-wider text-yellow-400 uppercase">Match Credential Hub</span>
+                </div>
+                <h2 class="font-rajdhani font-extrabold text-3xl sm:text-5xl text-white uppercase">
+                    LIVE ROOM <span class="text-yellow-400">CREDENTIALS</span>
+                </h2>
+                <p class="text-gray-400 text-sm mt-2">
+                    Room ID and Password are automatically published on this page exactly 10 minutes before the match start time. Make sure you are registered and logged in.
+                </p>
+            </div>
+
+            <!-- Room Cards Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- Room Card 1 (Counting down or Active) -->
+                <div class="bg-esports-card border-2 border-orange-500/50 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-orange-600 text-white font-rajdhani font-bold text-xs px-4 py-1 uppercase tracking-wider clip-badge">
+                        Registered ✓
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-rajdhani text-orange-400 font-bold bg-orange-500/10 px-3 py-1 rounded border border-orange-500/30">SQUAD BR • BERMUDA</span>
+                        <span class="text-xs text-gray-400 font-mono">Match #402</span>
+                    </div>
+
+                    <h3 class="font-rajdhani font-bold text-2xl text-white mb-4">
+                        Daily Elite Squad Battle #102
+                    </h3>
+
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border mb-6 flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-400 font-rajdhani uppercase">Room Status</div>
+                            <div class="text-emerald-400 font-rajdhani font-bold text-lg flex items-center mt-0.5">
+                                <i class="fa-solid fa-circle text-xs mr-2 animate-ping text-emerald-400"></i>
+                                CREDENTIALS LIVE NOW
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 font-rajdhani uppercase">Map / Slot</div>
+                            <div class="text-white font-rajdhani font-bold text-lg">Bermuda • Slot #14</div>
+                        </div>
+                    </div>
+
+                    <!-- Revealed Credentials Box -->
+                    <div class="grid grid-cols-2 gap-4 bg-gradient-to-r from-orange-950/40 to-red-950/40 p-4 rounded-xl border border-orange-500/40">
+                        <div>
+                            <div class="text-xs text-gray-300 font-rajdhani uppercase mb-1">Room ID</div>
+                            <div class="flex items-center space-x-2">
+                                <span class="font-mono font-bold text-xl text-yellow-400 tracking-wider" id="roomId1">84930219</span>
+                                <button onclick="copyText('84930219', 'Room ID Copied!')" class="bg-orange-600 hover:bg-orange-500 text-white px-2.5 py-1 rounded text-xs font-rajdhani">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-300 font-rajdhani uppercase mb-1">Room Password</div>
+                            <div class="flex items-center space-x-2">
+                                <span class="font-mono font-bold text-xl text-emerald-400 tracking-wider" id="roomPass1">FF99#VIP</span>
+                                <button onclick="copyText('FF99#VIP', 'Password Copied!')" class="bg-orange-600 hover:bg-orange-500 text-white px-2.5 py-1 rounded text-xs font-rajdhani">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Card 2 (Countdown Timer Active) -->
+                <div class="bg-esports-card border border-esports-border rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-esports-border text-gray-300 font-rajdhani font-bold text-xs px-4 py-1 uppercase tracking-wider clip-badge">
+                        Registered ✓
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-rajdhani text-blue-400 font-bold bg-blue-500/10 px-3 py-1 rounded border border-blue-500/30">SOLO BR • KALAHARI</span>
+                        <span class="text-xs text-gray-400 font-mono">Match #405</span>
+                    </div>
+
+                    <h3 class="font-rajdhani font-bold text-2xl text-white mb-4">
+                        Newbie & Pro Solo Giveaway #88
+                    </h3>
+
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border mb-6 flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-400 font-rajdhani uppercase">Room Status</div>
+                            <div class="text-yellow-400 font-rajdhani font-bold text-lg flex items-center mt-0.5">
+                                <i class="fa-solid fa-clock mr-2"></i>
+                                WAITING FOR ROOM CREATION
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 font-rajdhani uppercase">Your Slot</div>
+                            <div class="text-white font-rajdhani font-bold text-lg">Slot #28</div>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Box -->
+                    <div class="bg-esports-dark/80 p-4 rounded-xl border border-esports-border text-center">
+                        <div class="text-xs text-gray-400 font-rajdhani uppercase mb-2">Room Credentials Unlocking In:</div>
+                        <div class="flex items-center justify-center space-x-3 font-mono font-bold text-2xl text-orange-400">
+                            <span class="bg-esports-card px-3 py-1.5 rounded border border-esports-border">00</span>:
+                            <span class="bg-esports-card px-3 py-1.5 rounded border border-esports-border">38</span>:
+                            <span class="bg-esports-card px-3 py-1.5 rounded border border-esports-border text-yellow-400">45</span>
+                        </div>
+                        <div class="text-[11px] text-gray-400 mt-2">Keep this page open. Credentials appear automatically.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERBOARDS & RECENT RESULTS SECTION -->
+    <section id="leaderboard" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left: Top Players Leaderboard -->
+            <div class="lg:col-span-6 bg-esports-card border border-esports-border rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-esports-border">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-amber-500/20 text-amber-400 rounded-lg flex items-center justify-center border border-amber-500/40">
+                            <i class="fa-solid fa-trophy text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-rajdhani font-bold text-2xl text-white uppercase">TOP KILLERS & EARNERS</h3>
+                            <p class="text-xs text-gray-400">Season #4 Global Rankings</p>
+                        </div>
+                    </div>
+                    <span class="bg-amber-500/10 text-amber-400 text-xs font-rajdhani font-bold px-3 py-1 rounded border border-amber-500/30">WEEKLY</span>
+                </div>
+
+                <!-- Ranking Table -->
+                <div class="space-y-3">
+                    <!-- Rank 1 -->
+                    <div class="flex items-center justify-between bg-gradient-to-r from-amber-500/10 to-transparent p-3.5 rounded-xl border border-amber-500/30">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-amber-500 text-black font-rajdhani font-black flex items-center justify-center text-sm shadow">
+                                1
+                            </div>
+                            <div>
+                                <div class="font-rajdhani font-bold text-white text-base">V9•GODFATHER</div>
+                                <div class="text-[11px] text-gray-400 font-mono">UID: 39420418</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-rajdhani font-bold text-amber-400 text-base">₹18,400</div>
+                            <div class="text-[11px] text-emerald-400 font-mono">142 Kills</div>
+                        </div>
+                    </div>
+
+                    <!-- Rank 2 -->
+                    <div class="flex items-center justify-between bg-esports-dark p-3.5 rounded-xl border border-esports-border">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 text-black font-rajdhani font-black flex items-center justify-center text-sm shadow">
+                                2
+                            </div>
+                            <div>
+                                <div class="font-rajdhani font-bold text-white text-base">TEAM•NEXUS</div>
+                                <div class="text-[11px] text-gray-400 font-mono">UID: 50293810</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-rajdhani font-bold text-gray-200 text-base">₹14,250</div>
+                            <div class="text-[11px] text-emerald-400 font-mono">118 Kills</div>
+                        </div>
+                    </div>
+
+                    <!-- Rank 3 -->
+                    <div class="flex items-center justify-between bg-esports-dark p-3.5 rounded-xl border border-esports-border">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-amber-700 text-white font-rajdhani font-black flex items-center justify-center text-sm shadow">
+                                3
+                            </div>
+                            <div>
+                                <div class="font-rajdhani font-bold text-white text-base">TSM•ROLEX</div>
+                                <div class="text-[11px] text-gray-400 font-mono">UID: 81920341</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-rajdhani font-bold text-amber-600 text-base">₹11,900</div>
+                            <div class="text-[11px] text-emerald-400 font-mono">96 Kills</div>
+                        </div>
+                    </div>
+
+                    <!-- Rank 4 -->
+                    <div class="flex items-center justify-between bg-esports-dark p-3.5 rounded-xl border border-esports-border">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-esports-border text-gray-300 font-rajdhani font-black flex items-center justify-center text-sm">
+                                4
+                            </div>
+                            <div>
+                                <div class="font-rajdhani font-bold text-white text-base">BADBOY•OP</div>
+                                <div class="text-[11px] text-gray-400 font-mono">UID: 71920349</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-rajdhani font-bold text-gray-300 text-base">₹9,400</div>
+                            <div class="text-[11px] text-emerald-400 font-mono">84 Kills</div>
+                        </div>
+                    </div>
+
+                    <!-- Rank 5 -->
+                    <div class="flex items-center justify-between bg-esports-dark p-3.5 rounded-xl border border-esports-border">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-esports-border text-gray-300 font-rajdhani font-black flex items-center justify-center text-sm">
+                                5
+                            </div>
+                            <div>
+                                <div class="font-rajdhani font-bold text-white text-base">HYDRA•KILLER</div>
+                                <div class="text-[11px] text-gray-400 font-mono">UID: 90283412</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-rajdhani font-bold text-gray-300 text-base">₹8,100</div>
+                            <div class="text-[11px] text-emerald-400 font-mono">75 Kills</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Recent Match Results & Kill Feed -->
+            <div id="results" class="lg:col-span-6 bg-esports-card border border-esports-border rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-esports-border">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center border border-blue-500/40">
+                            <i class="fa-solid fa-square-poll-vertical text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-rajdhani font-bold text-2xl text-white uppercase">RECENT MATCH RESULTS</h3>
+                            <p class="text-xs text-gray-400">Verified Booyah & Kill Winners</p>
+                        </div>
+                    </div>
+                    <span class="bg-blue-500/10 text-blue-400 text-xs font-rajdhani font-bold px-3 py-1 rounded border border-blue-500/30">COMPLETED</span>
+                </div>
+
+                <!-- Results Feed -->
+                <div class="space-y-3">
+                    <!-- Match Result 1 -->
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-rajdhani font-bold text-sm text-white">Squad BR #398 (Bermuda)</span>
+                            <span class="text-[11px] text-emerald-400 font-mono">Verified ✓</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-300">
+                            <div>
+                                <span class="text-gray-400">Booyah Winner:</span> <strong class="text-yellow-400 font-rajdhani text-sm">TEAM TITANS</strong>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">Prize:</span> <strong class="text-emerald-400">₹2,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Match Result 2 -->
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-rajdhani font-bold text-sm text-white">Solo BR #397 (Kalahari)</span>
+                            <span class="text-[11px] text-emerald-400 font-mono">Verified ✓</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-300">
+                            <div>
+                                <span class="text-gray-400">Booyah Winner:</span> <strong class="text-yellow-400 font-rajdhani text-sm">VIPER•SNAKE</strong>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">Prize:</span> <strong class="text-emerald-400">₹1,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Match Result 3 -->
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-rajdhani font-bold text-sm text-white">CS 4v4 #194 (Factory)</span>
+                            <span class="text-[11px] text-emerald-400 font-mono">Verified ✓</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-300">
+                            <div>
+                                <span class="text-gray-400">Booyah Winner:</span> <strong class="text-yellow-400 font-rajdhani text-sm">NO MERCY ESPORTS</strong>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">Prize:</span> <strong class="text-emerald-400">₹3,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Match Result 4 -->
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-rajdhani font-bold text-sm text-white">Duo BR #395 (Alpine)</span>
+                            <span class="text-[11px] text-emerald-400 font-mono">Verified ✓</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-300">
+                            <div>
+                                <span class="text-gray-400">Booyah Winner:</span> <strong class="text-yellow-400 font-rajdhani text-sm">SHADOW & BLADE</strong>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">Prize:</span> <strong class="text-emerald-400">₹1,500</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- WALLET & REFERRAL SECTION -->
+    <section id="wallet" class="py-16 bg-gradient-to-b from-esports-dark via-[#151221] to-esports-dark border-t border-esports-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                
+                <!-- Left: Wallet Overview -->
+                <div class="bg-gradient-to-br from-esports-card to-[#1a1426] border border-emerald-500/30 rounded-2xl p-8 shadow-2xl">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/40">
+                            <i class="fa-solid fa-wallet text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-rajdhani font-bold text-2xl text-white uppercase">INSTANT WALLET & PAYOUTS</h3>
+                            <p class="text-xs text-gray-400">UPI / Paytm / Bank Transfer Supported</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-esports-dark p-6 rounded-xl border border-esports-border mb-6">
+                        <div class="text-xs text-gray-400 font-rajdhani uppercase">Available Balance</div>
+                        <div class="text-4xl font-rajdhani font-extrabold text-emerald-400 my-1">₹340.00</div>
+                        <div class="text-[11px] text-gray-400">Winnings can be withdrawn instantly (Min. ₹50)</div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="openWalletModal('add')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-rajdhani font-bold text-lg py-3.5 rounded clip-btn shadow-lg transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span>ADD CASH</span>
+                        </button>
+                        <button onclick="openWalletModal('withdraw')" class="bg-esports-card hover:bg-esports-border border border-esports-border text-gray-200 font-rajdhani font-bold text-lg py-3.5 rounded clip-btn transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                            <span>WITHDRAW</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Refer & Earn -->
+                <div class="bg-gradient-to-br from-esports-card to-[#261514] border border-orange-500/30 rounded-2xl p-8 shadow-2xl">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-orange-500/20 text-orange-400 rounded-xl flex items-center justify-center border border-orange-500/40">
+                            <i class="fa-solid fa-share-nodes text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-rajdhani font-bold text-2xl text-white uppercase">REFER & EARN ₹20</h3>
+                            <p class="text-xs text-gray-400">Invite Free Fire Friends & Earn Bonus Cash</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-300 text-sm mb-6 font-inter">
+                        Share your unique referral code with your guild members. When your friend joins their first tournament, you get <strong class="text-orange-400">₹20 instantly</strong> in your deposit wallet!
+                    </p>
+
+                    <div class="bg-esports-dark p-4 rounded-xl border border-esports-border flex items-center justify-between mb-4">
+                        <div>
+                            <div class="text-[10px] text-gray-400 font-rajdhani uppercase">Your Referral Code</div>
+                            <div class="text-lg font-mono font-bold text-yellow-400">VIPER99FF</div>
+                        </div>
+                        <button onclick="copyText('VIPER99FF', 'Referral Code Copied!')" class="bg-orange-600 hover:bg-orange-500 text-white font-rajdhani font-bold px-4 py-2 rounded text-sm">
+                            <i class="fa-solid fa-copy mr-1"></i> Copy
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RULES & ANTI-CHEAT BANNER -->
+    <section class="py-12 bg-esports-card border-t border-esports-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-red-500/20 text-red-400 rounded-xl flex items-center justify-center shrink-0 border border-red-500/30">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-rajdhani font-bold text-lg text-white mb-1">100% Anti-Cheat Policy</h4>
+                        <p class="text-xs text-gray-400 font-inter">Emulators, scripts, macro tools, and modded APKs are strictly prohibited. Instant ban for violators.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-orange-500/20 text-orange-400 rounded-xl flex items-center justify-center shrink-0 border border-orange-500/30">
+                        <i class="fa-solid fa-bolt text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-rajdhani font-bold text-lg text-white mb-1">Instant Prize Crediting</h4>
+                        <p class="text-xs text-gray-400 font-inter">Winnings are credited within 15 minutes of match results verification by our esports marshals.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center shrink-0 border border-emerald-500/30">
+                        <i class="fa-solid fa-headset text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-rajdhani font-bold text-lg text-white mb-1">24/7 Discord Support</h4>
+                        <p class="text-xs text-gray-400 font-inter">Facing room login issues or slot disputes? Our support team is online round the clock on Discord.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-esports-border py-12 text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex items-center justify-center w-9 h-9 bg-gradient-to-br from-orange-500 to-red-600 clip-esports">
+                            <i class="fa-solid fa-fire-flame-curved text-white"></i>
+                        </div>
+                        <span class="font-rajdhani font-bold text-2xl text-white uppercase">FF ARENA</span>
+                    </div>
+                    <p class="text-xs text-gray-400 font-inter">
+                        The ultimate competitive esports platform for Free Fire players in India. Daily tournaments, custom rooms, and verified cash prizes.
+                    </p>
+                </div>
+
+                <div>
+                    <h5 class="font-rajdhani font-bold text-white text-base uppercase mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#tournaments" class="hover:text-orange-500 transition">Active Tournaments</a></li>
+                        <li><a href="#room-center" class="hover:text-orange-500 transition">Room ID & Password</a></li>
+                        <li><a href="#leaderboard" class="hover:text-orange-500 transition">Leaderboards</a></li>
+                        <li><a href="#wallet" class="hover:text-orange-500 transition">Deposit & Withdraw</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="font-rajdhani font-bold text-white text-base uppercase mb-4">Game Modes</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#tournaments" class="hover:text-orange-500 transition">Battle Royale (Bermuda / Kalahari)</a></li>
+                        <li><a href="#tournaments" class="hover:text-orange-500 transition">Clash Squad 4v4 Custom</a></li>
+                        <li><a href="#tournaments" class="hover:text-orange-500 transition">Solo, Duo & Squad Tourneys</a></li>
+                        <li><a href="#tournaments" class="hover:text-orange-500 transition">Free Giveaways</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="font-rajdhani font-bold text-white text-base uppercase mb-4">Community & Legal</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-orange-500 transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Fair Play Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Discord Community</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-esports-border flex flex-col md:flex-row items-center justify-between text-xs text-gray-500">
+                <p>&copy; 2025 FF Arena Esports. Not affiliated with Garena Free Fire.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-orange-500 text-lg"><i class="fa-brands fa-discord"></i></a>
+                    <a href="#" class="hover:text-orange-500 text-lg"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-orange-500 text-lg"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-orange-500 text-lg"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Tournament Registration Modal -->
+    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-esports-card border border-orange-500/50 rounded-2xl w-full max-w-md p-6 relative shadow-2xl animate-fire-glow">
+            <button onclick="closeRegisterModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 bg-orange-500/20 text-orange-400 rounded-lg flex items-center justify-center border border-orange-500/40">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div>
+                    <h3 class="font-rajdhani font-bold text-xl text-white uppercase" id="modalMatchTitle">Tournament Registration</h3>
+                    <p class="text-xs text-gray-400">Confirm your Free Fire Player Details</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 my-4">
+                <div>
+                    <label class="block text-xs font-rajdhani uppercase text-gray-300 mb-1">Free Fire In-Game Name (IGN)</label>
+                    <input type="text" id="modalIgn" value="V9•VIPER" class="w-full bg-esports-dark border border-esports-border rounded-lg px-4 py-2.5 text-white text-sm font-rajdhani font-bold focus:border-orange-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-rajdhani uppercase text-gray-300 mb-1">Free Fire Player UID</label>
+                    <input type="text" id="modalUid" value="849204192" class="w-full bg-esports-dark border border-esports-border rounded-lg px-4 py-2.5 text-white text-sm font-mono focus:border-orange-500 outline-none">
+                </div>
+
+                <div class="bg-esports-dark p-3.5 rounded-lg border border-esports-border flex items-center justify-between text-xs">
+                    <span class="text-gray-400">Entry Fee Required:</span>
+                    <span class="font-rajdhani font-bold text-yellow-400 text-sm" id="modalFeeDisplay">₹40.00</span>
+                </div>
+
+                <div class="bg-esports-dark p-3.5 rounded-lg border border-esports-border flex items-center justify-between text-xs">
+                    <span class="text-gray-400">Wallet Balance:</span>
+                    <span class="font-rajdhani font-bold text-emerald-400 text-sm">₹340.00</span>
+                </div>
+            </div>
+
+            <button onclick="submitRegistration()" class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-rajdhani font-bold text-lg py-3 rounded clip-btn shadow-lg transition">
+                CONFIRM & JOIN SLOT
+            </button>
+        </div>
+    </div>
+
+    <!-- Wallet Modal -->
+    <div id="walletModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-esports-card border border-emerald-500/50 rounded-2xl w-full max-w-md p-6 relative shadow-2xl">
+            <button onclick="closeWalletModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-lg flex items-center justify-center border border-emerald-500/40">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                    <h3 class="font-rajdhani font-bold text-xl text-white uppercase">Wallet & Cash Center</h3>
+                    <p class="text-xs text-gray-400">Add deposit cash or withdraw winnings</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 my-4">
+                <div class="flex space-x-2">
+                    <button onclick="switchWalletTab('add')" id="tabAdd" class="flex-1 py-2 bg-emerald-600 text-white font-rajdhani font-bold text-sm rounded clip-btn">Add Cash</button>
+                    <button onclick="switchWalletTab('withdraw')" id="tabWithdraw" class="flex-1 py-2 bg-esports-dark text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn border border-esports-border">Withdraw</button>
+                </div>
+
+                <div id="walletAddContent" class="space-y-3">
+                    <label class="block text-xs font-rajdhani uppercase text-gray-300">Select Amount (₹)</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="setAmount(50)" class="bg-esports-dark border border-esports-border hover:border-emerald-500 py-2 rounded text-emerald-400 font-rajdhani font-bold">₹50</button>
+                        <button onclick="setAmount(100)" class="bg-esports-dark border border-esports-border hover:border-emerald-500 py-2 rounded text-emerald-400 font-rajdhani font-bold">₹100</button>
+                        <button onclick="setAmount(500)" class="bg-esports-dark border border-esports-border hover:border-emerald-500 py-2 rounded text-emerald-400 font-rajdhani font-bold">₹500</button>
+                    </div>
+                    <input type="number" id="customAmount" placeholder="Enter custom amount" class="w-full bg-esports-dark border border-esports-border rounded-lg px-4 py-2.5 text-white text-sm font-rajdhani focus:border-emerald-500 outline-none">
+                    <button onclick="processAddCash()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-rajdhani font-bold text-lg py-3 rounded clip-btn shadow-lg transition">
+                        PROCEED TO PAY (UPI / PAYTM)
+                    </button>
+                </div>
+
+                <div id="walletWithdrawContent" class="space-y-3 hidden">
+                    <label class="block text-xs font-rajdhani uppercase text-gray-300">Withdrawal UPI ID / Paytm Number</label>
+                    <input type="text" placeholder="username@okhdfcbank" class="w-full bg-esports-dark border border-esports-border rounded-lg px-4 py-2.5 text-white text-sm font-mono focus:border-emerald-500 outline-none">
+                    <label class="block text-xs font-rajdhani uppercase text-gray-300">Amount to Withdraw (₹)</label>
+                    <input type="number" placeholder="Min ₹50" class="w-full bg-esports-dark border border-esports-border rounded-lg px-4 py-2.5 text-white text-sm font-rajdhani focus:border-emerald-500 outline-none">
+                    <button onclick="processWithdraw()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-rajdhani font-bold text-lg py-3 rounded clip-btn shadow-lg transition">
+                        REQUEST INSTANT WITHDRAWAL
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-esports-card border border-orange-500 text-white px-5 py-3 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg" id="toastIcon"></i>
+        <span class="font-rajdhani font-bold text-base" id="toastMsg">Action successful!</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Tournament Category Filtering
+        function filterTournaments(category, btn) {
+            // Update active button style
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('bg-orange-600', 'text-white');
+                b.classList.add('bg-esports-card', 'text-gray-300');
+            });
+            btn.classList.remove('bg-esports-card', 'text-gray-300');
+            btn.classList.add('bg-orange-600', 'text-white');
+
+            // Filter cards
+            const cards = document.querySelectorAll('.tournament-card');
+            cards.forEach(card => {
+                const catAttr = card.getAttribute('data-category');
+                if (category === 'all' || catAttr.includes(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Toast Notification System
+        function showToast(msg, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = isSuccess ? "fa-solid fa-circle-check text-emerald-400 text-lg" : "fa-solid fa-triangle-exclamation text-red-400 text-lg";
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Copy to Clipboard
+        function copyText(text, successMsg) {
+            navigator.clipboard.writeText(text);
+            showToast(successMsg);
+        }
+
+        // Modal Handlers
+        function openRegisterModal(title, fee, prize) {
+            document.getElementById('modalMatchTitle').innerText = title;
+            document.getElementById('modalFeeDisplay').innerText = '₹' + fee;
+            document.getElementById('registerModal').classList.remove('hidden');
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('registerModal').classList.add('hidden');
+        }
+
+        function submitRegistration() {
+            const ign = document.getElementById('modalIgn').value;
+            const uid = document.getElementById('modalUid').value;
+            if(!ign || !uid) {
+                showToast('Please enter valid IGN and UID', false);
+                return;
+            }
+            closeRegisterModal();
+            showToast('Successfully Registered! Slot confirmed.');
+        }
+
+        function openWalletModal(tab = 'add') {
+            document.getElementById('walletModal').classList.remove('hidden');
+            switchWalletTab(tab);
+        }
+
+        function closeWalletModal() {
+            document.getElementById('walletModal').classList.add('hidden');
+        }
+
+        function switchWalletTab(tab) {
+            const addContent = document.getElementById('walletAddContent');
+            const withdrawContent = document.getElementById('walletWithdrawContent');
+            const tabAdd = document.getElementById('tabAdd');
+            const tabWithdraw = document.getElementById('tabWithdraw');
+
+            if(tab === 'add') {
+                addContent.classList.remove('hidden');
+                withdrawContent.classList.add('hidden');
+                tabAdd.className = "flex-1 py-2 bg-emerald-600 text-white font-rajdhani font-bold text-sm rounded clip-btn";
+                tabWithdraw.className = "flex-1 py-2 bg-esports-dark text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn border border-esports-border";
+            } else {
+                addContent.classList.add('hidden');
+                withdrawContent.classList.remove('hidden');
+                tabWithdraw.className = "flex-1 py-2 bg-emerald-600 text-white font-rajdhani font-bold text-sm rounded clip-btn";
+                tabAdd.className = "flex-1 py-2 bg-esports-dark text-gray-300 font-rajdhani font-bold text-sm rounded clip-btn border border-esports-border";
+            }
+        }
+
+        function setAmount(amt) {
+            document.getElementById('customAmount').value = amt;
+        }
+
+        function processAddCash() {
+            const amt = document.getElementById('customAmount').value || '100';
+            closeWalletModal();
+            showToast('Redirecting to UPI Payment Gateway for ₹' + amt + '...');
+            setTimeout(() => {
+                showToast('Payment Successful! ₹' + amt + ' added to wallet.');
+            }, 2000);
+        }
+
+        function processWithdraw() {
+            closeWalletModal();
+            showToast('Withdrawal request submitted successfully!');
+        }
+    </script>
+</body>
+</html>
